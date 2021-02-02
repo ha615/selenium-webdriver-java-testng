@@ -9,7 +9,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-public class Topic_02_Xpath_Css_Html {
+public class Topic_02_Xpath_Css_Html_Path_1 {
 
 	WebDriver driver;
 	@BeforeClass
@@ -20,13 +20,23 @@ public class Topic_02_Xpath_Css_Html {
 		driver.get("https://alada.vn/tai-khoan/dang-ky.html");
 	}
 	@Test
-	public void loginForm() {
-		//hiểu được html của 1 element
-		//tại sao phải bắt 1 element
-		//bắt xong rồi làm gì, thao tác như nào	
+	public void loginForm() throws Exception {
+		//Hiểu được html của 1 Element
+		// Tại sao phải bắt Element
+		// Bắt xong phải làm gì/thao tác như thế nào
 		driver.findElement(By.id("txtFirstname")).sendKeys("Luong Khong Nho");
 		driver.findElement(By.id("txtEmail")).sendKeys("lkn@gmail.com");
 		driver.findElement(By.id("txtCEmail")).sendKeys("lkn@gmail.com");
+		driver.findElement(By.cssSelector("#txtPassword")).sendKeys("123456");
+		// Thao tác đăng kí button
+		driver.findElement(By.xpath("//form[@id='frmLogin']//button[text()='ĐĂNG KÝ']")).click();
+		// driver: đại diện cho selenium webdriver - gọi thư viện ra để sử dụng
+		// findElement: tìm element
+		// by.id, by.xpaht, by.css: loại locator gì
+		// click(): hành động
+		
+		Thread.sleep(5000);
+		
 	}
 	@AfterClass
 	public void afterClass() {

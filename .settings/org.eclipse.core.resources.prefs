@@ -1,2 +1,5 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=branch 'master' of https\://github.com/ha615/selenium-webdriver-java-testng
 eclipse.preferences.version=1
-encoding//src/selenium/Topic_02_Xpath_Css_Html.java=UTF-8
+encoding//src/selenium/Topic_02_Xpath_Css_Html_Path_1.java=UTF-8
