@@ -21,6 +21,9 @@ public class Topic_02_Xpath_Css_Html {
 	}
 	@Test
 	public void loginForm() {
+		//hiểu được html của 1 element
+		//tại sao phải bắt 1 element
+		//bắt xong rồi làm gì, thao tác như nào	
 		driver.findElement(By.id("txtFirstname")).sendKeys("Luong Khong Nho");
 		driver.findElement(By.id("txtEmail")).sendKeys("lkn@gmail.com");
 		driver.findElement(By.id("txtCEmail")).sendKeys("lkn@gmail.com");
