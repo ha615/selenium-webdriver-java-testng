@@ -46,7 +46,7 @@ public class Topic06_WebBrowser_WebElement_Path4 {
 		element.click();
 	}
 
-	@Test
+	//@Test
 	public void TC01_Verify_isDisplaed_Element() throws Exception {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 
@@ -67,7 +67,7 @@ public class Topic06_WebBrowser_WebElement_Path4 {
 
 	}
 
-	@Test
+	//@Test
 	public void TC02_Verify_isEnable_Element() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		Assert.assertTrue(isElementEnable(txtEdu));
@@ -87,47 +87,28 @@ public class Topic06_WebBrowser_WebElement_Path4 {
 
 	}
 
-	// @Test
-	public void TC04_Register_Function_At_Mailchimp() {
+	@Test
+	public void TC04_Register_Function_At_Mailchimp() throws InterruptedException {
 		driver.get("https://login.mailchimp.com/signup/");
-		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("zinzin@gmail.com");
-		driver.findElement(By.xpath("//input[@name='username']")).sendKeys("bobosusu");
-		WebElement txtPassword = driver.findElement(By.xpath("//input[@id='new_password']"));
-		txtPassword.sendKeys("123455");
-		Boolean bool = driver.findElement(By.cssSelector("#create-account")).isEnabled();
-		if (bool)
-			System.out.println("Password valid");
-		else
-			System.out.println("Password invalid");
+		WebElement txtEmail = driver.findElement(By.cssSelector("#email"));
+		WebElement txtUserName = driver.findElement(By.cssSelector("#new_username"));
+		WebElement txtPassword = driver.findElement(By.cssSelector("#new_password"));
+		txtEmail.sendKeys("Automation Testing");
+		txtUserName.sendKeys("Baggio.R");
+		// lowercase character
+		txtPassword.sendKeys("abc");
+		Thread.sleep(2000);
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='lowercase-char completed' and text()='One lowercase character']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.id("create-account")).isEnabled());
+		// uppercase character
 		txtPassword.clear();
-		txtPassword.sendKeys("abcdqwe");
-		bool = driver.findElement(By.cssSelector("#create-account")).isEnabled();
-		if (bool)
-			System.out.println("Password valid");
-		else
-			System.out.println("Password invalid");
-		driver.findElement(By.xpath("//input[@id='new_password']")).sendKeys("ASDFSDSD");
-		bool = driver.findElement(By.cssSelector("#create-account")).isEnabled();
-		if (bool)
-			System.out.println("Password valid");
-		else
-			System.out.println("Password invalid");
-
-		txtPassword.clear();
-		txtPassword.sendKeys("!@#$%^");
-		bool = driver.findElement(By.cssSelector("#create-account")).isEnabled();
-		if (bool)
-			System.out.println("Password valid");
-		else
-			System.out.println("Password invalid");
-
-		txtPassword.clear();
-		txtPassword.sendKeys("abcdqwe12A!@#");
-		bool = driver.findElement(By.cssSelector("#create-account")).isEnabled();
-		if (bool)
-			System.out.println("Password valid");
-		else
-			System.out.println("Password invalid");
+		txtPassword.sendKeys("ABC");
+		Thread.sleep(2000);
+		Assert.assertTrue(driver.findElement(By.xpath("//li[@class='uppercase-char completed' and text()='One uppercase character']")).isDisplayed());
+		Assert.assertFalse(driver.findElement(By.id("create-account")).isEnabled());
+		// number
+		// special character
+		// 8 characters minimum
 	}
 
 	@AfterTest
