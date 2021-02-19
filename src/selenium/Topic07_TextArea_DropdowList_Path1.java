@@ -14,96 +14,162 @@ import org.testng.Assert;
 
 public class Topic07_TextArea_DropdowList_Path1 {
 	WebDriver driver;
-	String loginPageUrl;
-	String userID;
-	String password;
-	String name, dob, address, city, state, pin, phone, email;
-	private By txtName = By.xpath("//input[@name='name']");
-	private By inputDOB = By.name("dob");
-	private By txtareaAddress = By.name("addr");
-	private By txtCity = By.name("city");
-	private By txtState = By.name("state");
-	private By txtPin = By.name("pinno");
-	private By txtTelephone = By.name("telephoneno");
-	private By txtEmail = By.name("emailid");
-	private By txtPas = By.name("password");
+	String userID = "", password = "";
+	String loginUrl = "";
+	
+	By txtCustomerName = By.name("name");
+	By rdGender = By.name("gender");
+	By dtpDOB = By.name("dob");
+	By txtareaAddress = By.name("addr");
+	By txtCity = By.name("city");
+	By txtState = By.name("state");
+	By txtPIN = By.name("pinno");
+	By txtPhone = By.name("telephoneno");
+	By txtEmail = By.name("emailid");
+	By txtPass = By.name("password");
+	String customerID;
+	String customerName;
+	String dayOfBirt;
+	String addr;
+	String city;
+	String state;
+	String pin;
+	String phone;
+	String email;
 
-	private By btnSubmit = By.name("sub");
-	private By btnReset = By.name("res");
+	String editAaddr;
+	String editCity;
+	String editState;
+	String editPin;
+	String editPhone;
+	String editEmail;
+	
 	@BeforeClass
 	public void beforeClass() {
 		//32771
 		driver = new FirefoxDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
-		driver.get("https://www.demo.guru99.com/v4/");
-		name = "brian adam";
-		dob = "01-01-1990";
-		address = "Lang Kenh Phu Bai Nam Dinh";
-		city = "Nam Dinh";
-		state = "Quat Lam Tu";
-		pin = "021531";
-		phone = "0987256351";
-		email = "brianadam@yahoo.com";
-		password = "0987256351";
+		driver.get("https://www.demo.guru99.com/v4");
 	}
 
 	@Test
 	public void TC01_Register() {
-		loginPageUrl = driver.getCurrentUrl();
-		Random ran = new Random();
+		loginUrl  = driver.getCurrentUrl();
 		driver.findElement(By.xpath("//a[text()='here']")).click();
-		driver.findElement(By.name("emailid")).sendKeys("zinzin" + ran.nextInt(999999) + "@gmail.com");
+		driver.findElement(By.name("emailid")).sendKeys("zinzin@gmail.com");
 		driver.findElement(By.name("btnLogin")).click();
+		
+		// get info user/pass ra luu vao bien
 		userID = driver.findElement(By.xpath("//td[text()='User ID :']/following-sibling::td")).getText();
 		password = driver.findElement(By.xpath("//td[text()='Password :']/following-sibling::td")).getText();
-	}
-
-	@Test
-	public void TC02_Login() {
-		driver.get(loginPageUrl);
-		loginPageUrl = driver.getCurrentUrl();
-		driver.findElement(By.name("uid")).sendKeys(userID);
-		driver.findElement(By.name("password")).sendKeys(password);
-		driver.findElement(By.name("btnLogin")).click();
-		Assert.assertTrue(driver.findElement(By.xpath("//td[text()='Manger Id : " + userID + "']")).isDisplayed());
-	}
-
-	@Test
-	public void TC03_New_Customer() {
-		driver.findElement(By.xpath("//a[text()='New Customer']")).click();
 		
-		driver.findElement(txtName).sendKeys(name);
-		driver.findElement(inputDOB).sendKeys(dob);
-		driver.findElement(txtareaAddress).sendKeys(address);
+		Random ran = new Random();
+		
+		customerName = "Linh";
+		dayOfBirt = "2000-01-02";
+		addr ="Cau Ong Lanh";
+		city = "HCM City";
+		state = "Viet Nam";
+		pin = "065897";
+		phone = "0987123654";
+		email = "zinzin"+ ran.nextInt(999999) +"@gmail.com";
+		
+		editAaddr = "Cho Cau Muoi";
+		editCity = "Vung Tau";
+		editState ="Viet Nam";
+		editPin ="657812";
+		editPhone = "0987123888";
+		editEmail = "subo"+ ran.nextInt(999999) + "@yahoo.com";
+	}
+
+	@Test
+	public void TC02_Login() {	
+		driver.get(loginUrl);
+		//set gia tri tu bien vao form dang nhap
+		driver.findElement(By.name("uid")).sendKeys(userID);
+		driver.findElement(txtPass).sendKeys(password);
+		driver.findElement(By.name("btnLogin")).click();
+		
+		Assert.assertTrue(driver.findElement(By.xpath("//td[text()='Manger Id : " + userID +"']")).isDisplayed());
+	}
+
+	@Test
+	public void TC03_New_Customer() throws InterruptedException {
+		driver.findElement(By.xpath("//a[text()='New Customer']")).click();
+		//input
+		driver.findElement(txtCustomerName).sendKeys(customerName);
+		driver.findElement(dtpDOB).sendKeys(dayOfBirt);
+		driver.findElement(txtareaAddress).sendKeys(addr);
 		driver.findElement(txtCity).sendKeys(city);
 		driver.findElement(txtState).sendKeys(state);
-		driver.findElement(txtPin).sendKeys(pin);
-		driver.findElement(txtTelephone).sendKeys(phone);
+		driver.findElement(txtPIN).sendKeys(pin);
+		driver.findElement(txtPhone).sendKeys(phone);
 		driver.findElement(txtEmail).sendKeys(email);
-		driver.findElement(txtPas).sendKeys(password);
-
-		driver.findElement(btnSubmit).click();
+		driver.findElement(txtPass).sendKeys(password);
+		driver.findElement(By.name("sub")).click();
 		
 		Assert.assertTrue(driver.findElement(By.xpath("//p[text()='Customer Registered Successfully!!!']")).isDisplayed());
-		
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Customer Name']/following-sibling::td")).getText(), name);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Birthdate']/following-sibling::td")).getText(), dob);
-		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']/following-sibling::td")).getText(), address);
+	
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Customer Name']/following-sibling::td")).getText(), customerName);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Birthdate']/following-sibling::td")).getText(), dayOfBirt);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']/following-sibling::td")).getText(), addr);
 		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='City']/following-sibling::td")).getText(), city);
 		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='State']/following-sibling::td")).getText(), state);
 		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Pin']/following-sibling::td")).getText(), pin);
 		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Mobile No.']/following-sibling::td")).getText(), phone);
 		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Email']/following-sibling::td")).getText(), email);
 		
+		customerID = driver.findElement(By.xpath("//td[text()='Customer ID']/following-sibling::td")).getText();
 	}
 
 	@Test
 	public void TC04_Edit_Customer() {
-
+		driver.findElement(By.xpath("//a[text()='Edit Customer']")).click();
+		driver.findElement(By.name("cusid")).sendKeys(customerID);
+		driver.findElement(By.name("AccSubmit")).click();
+		
+		Assert.assertTrue(driver.findElement(By.xpath("//p[text()='Edit Customer']")).isDisplayed());
+		//verify 3 object isEnable
+		Assert.assertFalse(isElementEnalble(txtCustomerName));
+		Assert.assertFalse(isElementEnalble(rdGender));
+		Assert.assertFalse(isElementEnalble(dtpDOB));
+		
+		//input edit data
+		driver.findElement(txtareaAddress).clear();
+		driver.findElement(txtCity).clear();
+		driver.findElement(txtState).clear();
+		driver.findElement(txtPIN).clear();
+		driver.findElement(txtPhone).clear();
+		driver.findElement(txtEmail).clear();
+	
+		driver.findElement(txtareaAddress).sendKeys(editAaddr);
+		driver.findElement(txtCity).sendKeys(editCity);
+		driver.findElement(txtState).sendKeys(editState);
+		driver.findElement(txtPIN).sendKeys(editPin);
+		driver.findElement(txtPhone).sendKeys(editPhone);
+		driver.findElement(txtEmail).sendKeys(editEmail);
+		driver.findElement(By.name("sub")).click();
+		
+		Assert.assertTrue(driver.findElement(By.xpath("//p[text()='Customer details updated Successfully!!!']")).isDisplayed());
+		
+		//output
+		Assert.assertEquals(driver.findElement(txtareaAddress), editAaddr);
+		Assert.assertEquals(driver.findElement(txtCity), editCity);
+		Assert.assertEquals(driver.findElement(txtState), editState);
+		Assert.assertEquals(driver.findElement(txtPIN), editPin);
+		Assert.assertEquals(driver.findElement(txtPhone), editPhone);
+		Assert.assertEquals(driver.findElement(txtEmail), editEmail);
+	
 	}
 
-	@AfterClass
+	private boolean isElementEnalble(By by) {
+		if(driver.findElement(by).isEnabled())
+			return true;
+		return false;
+	}
+
+	//@AfterClass
 	public void afterClass() {
 		driver.quit();
 	}
