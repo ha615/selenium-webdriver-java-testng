@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 
-public class Topic07_TextArea_DropdowList_Path2 {
+public class Topic_07_TextArea_DropdowList_Path2 {
 	WebDriver driver;
 	Random ran = new Random();
 	private String fName = "";

@@ -14,7 +14,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class Topic06_WebBrowser_WebElement_Path1 {
+public class Topic_06_WebBrowser_WebElement_Path1 {
 	WebDriver driver = new FirefoxDriver();
 
 	

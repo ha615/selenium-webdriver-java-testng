@@ -10,8 +10,9 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class Topic06_WebBrowser_WebElement_Path3 {
+public class Topic_06_WebBrowser_WebElement_Path2 {
 	WebDriver driver = new FirefoxDriver();
+
 
 	@BeforeTest
 	public void initTest() {
@@ -20,43 +21,42 @@ public class Topic06_WebBrowser_WebElement_Path3 {
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
-	public boolean isElementDisplayed(WebElement element) {
-		if (element.isDisplayed()) {
-			System.out.println("Element is display");
-			return true;
-		} else {
-			System.out.println("Element is not display");
-			return false;
-		}
-	}
-
-	public void sendValueToElement(String value, WebElement element) {
-		element.sendKeys(value);
-	}
-
-	public void clickToElement(WebElement element) {
-		element.click();
-	}
 	@Test
 	public void TC01_Verify_isDisplaed_Element() throws Exception {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		WebElement txtEmail = driver.findElement(By.xpath("//input[@id='mail']"));
 		WebElement txtAge = driver.findElement(By.xpath("//input[@value='under_18']"));
 		WebElement txtEdu = driver.findElement(By.xpath("//textarea[@id='edu']"));
-		if(isElementDisplayed(txtEmail)) {
-			Thread.sleep(5000);
-			sendValueToElement("Automation Testing", txtEmail);
+		
+		if(txtEmail.isDisplayed())
+		{
+			txtEmail.sendKeys("Automtion testing");
+			Thread.sleep(3000);
+			System.out.println("Element is display");
+		}
+		else
+		{
+			System.out.println("Element is not display");
 		}
 		
-		if(isElementDisplayed(txtEdu)) {
-			Thread.sleep(5000);
-			sendValueToElement("Automation Testing", txtEdu);
+		if(txtAge.isDisplayed())
+		{
+			txtAge.click();
+			System.out.println("Element is display");
 		}
-
+		else
+		{
+			System.out.println("Element is not display");
+		}
 		
-		if(isElementDisplayed(txtAge)) {
-			Thread.sleep(5000);
-			clickToElement(txtAge);
+		if(txtEdu.isDisplayed())
+		{
+			txtEdu.sendKeys("Maven clean verify");
+			System.out.println("Element is display");
+		}
+		else
+		{
+			System.out.println("Element is not display");
 		}
 	}
 
@@ -75,7 +75,7 @@ public class Topic06_WebBrowser_WebElement_Path3 {
 
 	}
 
-	// @Test
+	//@Test
 	public void TC04_Register_Function_At_Mailchimp() {
 		driver.get("https://login.mailchimp.com/signup/");
 		driver.findElement(By.xpath("//input[@id='email']")).sendKeys("zinzin@gmail.com");

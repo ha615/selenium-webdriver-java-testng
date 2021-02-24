@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 
 import org.testng.Assert;
 
-public class Topic07_TextArea_DropdowList_Path1 {
+public class Topic_07_TextArea_DropdowList_Path1 {
 	WebDriver driver;
 	String userID = "", password = "";
 	String loginUrl = "";

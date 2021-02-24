@@ -20,7 +20,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.ExpectedExceptions;
 import org.testng.annotations.Test;
 
-public class Topic07_TextArea_DropdowList_Path3 {
+public class Topic_07_TextArea_DropdowList_Path3 {
 	WebDriver driver;
 	WebDriverWait explicitWait;
 	JavascriptExecutor jsExecutor;
@@ -156,7 +156,7 @@ public class Topic07_TextArea_DropdowList_Path3 {
 		driver.get("http://multiple-select.wenzhixin.net.cn/templates/template.html?v=189&url=basic.html");
 		SelectIemByMultipleCustomDropDownList("(//button[@class='ms-choice'])[1]",
 				"(//div[@class='ms-drop bottom'])[1]//span", months);
-		Assert.assertEquals(areItemsSelected(months), months);
+		Assert.assertTrue(areItemsSelected(months));
 	}
 
 	private boolean areItemsSelected(String[] itemSelectedText) {
@@ -164,6 +164,7 @@ public class Topic07_TextArea_DropdowList_Path3 {
 		List<WebElement> itemsSelected = driver.findElements(By.xpath("//li[@class='selected']//span"));
 		int countItemSelected = itemsSelected.size();
 		
+		// info about Items are selected
 		String allItemsSelectedText = driver.findElement(By.xpath("(//button[@class='ms-choice'])[1]//span")).getText();
 		System.out.println("Text is selected " + allItemsSelectedText);
 		
@@ -173,16 +174,15 @@ public class Topic07_TextArea_DropdowList_Path3 {
 					break;
 			}
 			return true;
-		}
-		else 
-			if(countItemSelected > 3 && countItemSelected < 12) {
-				return driver.findElement(By.xpath(""))		
-			}
+		}else if(countItemSelected > 3 && countItemSelected < 12) {
+				return driver.findElement(By.xpath("(//button[@class='ms-choice'])[1]/span[text()='" + countItemSelected + "of 12 selected']")).isDisplayed();		
 				
-		}
-
-	return null;
-
+			}else if(countItemSelected>=12){
+				return driver.findElement(By.xpath("(//button[@class='ms-choice'])[1]/span[text()='All selected']")).isDisplayed();	
+			}else {
+				new RuntimeException("");
+				return false;
+			}	
 	}
 
 	private void SelectIemByMultipleCustomDropDownList(String parentXpath, String allItemsXpath,
@@ -233,12 +233,12 @@ public class Topic07_TextArea_DropdowList_Path3 {
 
 	private void SelectIemByCustomDropDownList(String parentXpath, String allItemsXpath, String expectedItem) {
 
-		// click vào dropdown
+		// click vÃ o dropdown
 
 		explicitWait.until(ExpectedConditions.elementToBeClickable(By.xpath(parentXpath)));
 		driver.findElement(By.xpath(parentXpath)).click();
 
-		// chờ cho cac item hien thi ra het trước khi chọn
+		// chá»� cho cac item hien thi ra het trÆ°á»›c khi chá»�n
 		explicitWait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(allItemsXpath)));
 
 		List<WebElement> allItems = driver.findElements(By.xpath(allItemsXpath));
