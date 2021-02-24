@@ -29,6 +29,7 @@ public class Topic07_TextArea_DropdowList_Path1 {
 	By txtPass = By.name("password");
 	String customerID;
 	String customerName;
+	String gender;
 	String dayOfBirt;
 	String addr;
 	String city;
@@ -67,6 +68,7 @@ public class Topic07_TextArea_DropdowList_Path1 {
 		Random ran = new Random();
 		
 		customerName = "Linh";
+		gender = "male";
 		dayOfBirt = "2000-01-02";
 		addr ="Cau Ong Lanh";
 		city = "HCM City";
@@ -135,6 +137,14 @@ public class Topic07_TextArea_DropdowList_Path1 {
 		Assert.assertFalse(isElementEnalble(rdGender));
 		Assert.assertFalse(isElementEnalble(dtpDOB));
 		
+		//verify all field
+		Assert.assertEquals(driver.findElement(txtCustomerName).getAttribute("value"), customerName);
+		Assert.assertEquals(driver.findElement(rdGender).getAttribute("value"), gender);
+		Assert.assertEquals(driver.findElement(dtpDOB).getAttribute("value"), dayOfBirt);
+		Assert.assertEquals(driver.findElement(txtareaAddress).getText(), addr);
+		Assert.assertEquals(driver.findElement(txtCity).getAttribute("value"), city);
+		Assert.assertEquals(driver.findElement(txtState).getAttribute("value"), state);
+		
 		//input edit data
 		driver.findElement(txtareaAddress).clear();
 		driver.findElement(txtCity).clear();
@@ -154,12 +164,15 @@ public class Topic07_TextArea_DropdowList_Path1 {
 		Assert.assertTrue(driver.findElement(By.xpath("//p[text()='Customer details updated Successfully!!!']")).isDisplayed());
 		
 		//output
-		Assert.assertEquals(driver.findElement(txtareaAddress), editAaddr);
-		Assert.assertEquals(driver.findElement(txtCity), editCity);
-		Assert.assertEquals(driver.findElement(txtState), editState);
-		Assert.assertEquals(driver.findElement(txtPIN), editPin);
-		Assert.assertEquals(driver.findElement(txtPhone), editPhone);
-		Assert.assertEquals(driver.findElement(txtEmail), editEmail);
+		
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Customer Name']/following-sibling::td")).getText(), customerName);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Customer ID']/following-sibling::td")).getText(), customerID);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Address']/following-sibling::td")).getText(), editAaddr);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='City']/following-sibling::td")).getText(), editCity);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='State']/following-sibling::td")).getText(), editState);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Pin']/following-sibling::td")).getText(), editPin);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Mobile No.']/following-sibling::td")).getText(), editPhone);
+		Assert.assertEquals(driver.findElement(By.xpath("//td[text()='Email']/following-sibling::td")).getText(), editEmail);
 	
 	}
 
@@ -169,7 +182,7 @@ public class Topic07_TextArea_DropdowList_Path1 {
 		return false;
 	}
 
-	//@AfterClass
+	@AfterClass
 	public void afterClass() {
 		driver.quit();
 	}
