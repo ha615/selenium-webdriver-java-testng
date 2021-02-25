@@ -1,5 +1,8 @@
 package selenium;
 
+import static org.junit.Assert.assertArrayEquals;
+
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
@@ -23,7 +26,7 @@ public class Topic_09_Button_Radio_Checkbox {
 		driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
 	}
 
-	public void TC01_Button_JavaScript_Executor() {
+	public void TC01_Button() {
 		driver.get("https://www.fahasa.com/customer/account/create");
 
 		driver.findElement(By.xpath("//a[text() = 'Đăng nhập']")).click();
@@ -48,29 +51,30 @@ public class Topic_09_Button_Radio_Checkbox {
 				.findElement(By.xpath(
 						"//label[text()='Số điện thoại/Email']/following-sibling::div[@class='fhs-input-alert']"))
 				.getText(), "Thông tin này không thể để trống");
-		
+
 		Assert.assertEquals(driver
-				.findElement(By.xpath(
-						"//label[text()='Mật khẩu']/following-sibling::div[@class='fhs-input-alert']"))
+				.findElement(By.xpath("//label[text()='Mật khẩu']/following-sibling::div[@class='fhs-input-alert']"))
 				.getText(), "Thông tin này không thể để trống");
 	}
-	
-	@Test
-	public void TC02_Default_Checkbox_Or_RadioButton() {
-		driver.get("http://demos.telerik.com/kendo-ui/styling/checkboxes");
-		By checkbox = By.xpath("//label[text()='Dual-zone air conditioning']/preceding-sibling::input");
-		jsScrollToElement(checkbox );
-		driver.findElement(checkbox).click();
-		sleepInSecond(4);
-	
-		Assert.assertTrue(driver.findElement(checkbox).isSelected());
-		//input[@id='eq5']/following-sibling::label
-	}
 
-	private void jsScrollToElement(By by) {
-		// TODO Auto-generated method stub
-		WebElement element = driver.findElement(by);
-		jsExecutor.executeScript("arguments[0].scrollIntoView(true)", element);
+	@Test
+	public void TC02_Default_Checkbox_RadioButton() {
+		driver.get("https://automationfc.github.io/multiple-fields/");
+		
+		/*
+		 * List<WebElement> elements =
+		 * driver.findElements(By.xpath("//input[@type='checkbox']")); for(WebElement
+		 * item:elements) item.click();
+		 */
+				
+		driver.findElement(By.xpath("//input[@value='Digestive Problems']")).click();
+		Assert.assertTrue(
+				driver.findElement(By.xpath("//input[@value='Digestive Problems']")).isSelected());
+		sleepInSecond(3);
+		driver.findElement(By.xpath("//input[@value='Digestive Problems']")).click();
+		
+		driver.findElement(By.xpath("//input[@value='I have a strict diet']")).click();
+		Assert.assertTrue(driver.findElement(By.xpath("//input[@value='I have a strict diet']")).isSelected());
 	}
 
 	private void removeDisableAtributeByJS(By by) {
