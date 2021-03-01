@@ -37,7 +37,7 @@ public class Topic_10_User_Interactions {
 	@Test
 	public void TC02_Hover_To_Element() {
 		driver.get("https://www.myntra.com/");
-		actions.moveToElement(driver.findElement(By.xpath("//div[@class='desktop-navLink']/a[text()='Kids']"))).build().perform();
+		actions.moveToElement(driver.findElement(By.xpath("//div[@class='desktop-navLink']/a[text()='Kids']"))).perform();
 		sleepSecond(4);
 		driver.findElement(By.xpath("//a[text()='Home & Bath']")).click();
 		sleepSecond(6);
