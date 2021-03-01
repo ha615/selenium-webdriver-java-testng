@@ -26,7 +26,7 @@ public class Topic_09_Button_Radio_Checkbox {
 	public void TC01_Button_JavaScript_Executor() {
 		driver.get("https://www.fahasa.com/customer/account/create");
 
-		driver.findElement(By.xpath("//a[text() = 'Đăng nhập']")).click();
+		driver.findElement(By.xpath("//a[text() = 'Ä�Äƒng nháº­p']")).click();
 		Assert.assertFalse(driver.findElement(By.xpath("//button[@class='fhs-btn-login']")).isEnabled());
 
 		driver.findElement(By.xpath("//input[@id='login_username']")).sendKeys("automationtesting@yahoo.com");
@@ -35,7 +35,7 @@ public class Topic_09_Button_Radio_Checkbox {
 		Assert.assertTrue(driver.findElement(By.xpath("//button[@class='fhs-btn-login']")).isEnabled());
 
 		driver.navigate().refresh();
-		driver.findElement(By.xpath("//a[text() = 'Đăng nhập']")).click();
+		driver.findElement(By.xpath("//a[text() = 'Ä�Äƒng nháº­p']")).click();
 		sleepInSecond(3);
 
 		By loginBtn = By.cssSelector(".fhs-btn-login");
@@ -46,32 +46,30 @@ public class Topic_09_Button_Radio_Checkbox {
 
 		Assert.assertEquals(driver
 				.findElement(By.xpath(
-						"//label[text()='Số điện thoại/Email']/following-sibling::div[@class='fhs-input-alert']"))
-				.getText(), "Thông tin này không thể để trống");
+						"//label[text()='Sá»‘ Ä‘iá»‡n thoáº¡i/Email']/following-sibling::div[@class='fhs-input-alert']"))
+				.getText(), "ThÃ´ng tin nÃ y khÃ´ng thá»ƒ Ä‘á»ƒ trá»‘ng");
 		
 		Assert.assertEquals(driver
 				.findElement(By.xpath(
-						"//label[text()='Mật khẩu']/following-sibling::div[@class='fhs-input-alert']"))
-				.getText(), "Thông tin này không thể để trống");
+						"//label[text()='Máº­t kháº©u']/following-sibling::div[@class='fhs-input-alert']"))
+				.getText(), "ThÃ´ng tin nÃ y khÃ´ng thá»ƒ Ä‘á»ƒ trá»‘ng");
 	}
 	
 	@Test
 	public void TC02_Default_Checkbox_Or_RadioButton() {
-		driver.get("http://demos.telerik.com/kendo-ui/styling/checkboxes");
-		By checkbox = By.xpath("//label[text()='Dual-zone air conditioning']/preceding-sibling::input");
-		jsScrollToElement(checkbox );
-		driver.findElement(checkbox).click();
-		sleepInSecond(4);
-	
-		Assert.assertTrue(driver.findElement(checkbox).isSelected());
-		//input[@id='eq5']/following-sibling::label
+		driver.get("https://automationfc.github.io/multiple-fields/");
+		driver.findElement(By.xpath("//input[@type='checkbox' and @value='Anemia']")).click();
+		sleepInSecond(3);
+		//label[text()=' Anemia ']/preceding-sibling::input
+		Assert.assertTrue(driver.findElement(By.xpath("//label[text()=' Anemia ']/preceding-sibling::input")).isSelected());
+		
+		driver.findElement(By.xpath("//input[@type='checkbox' and @value='Anemia']")).click();
+		sleepInSecond(3);
+		Assert.assertFalse(driver.findElement(By.xpath("//label[text()=' Anemia ']/preceding-sibling::input")).isSelected());
+
 	}
 
-	private void jsScrollToElement(By by) {
-		// TODO Auto-generated method stub
-		WebElement element = driver.findElement(by);
-		jsExecutor.executeScript("arguments[0].scrollIntoView(true)", element);
-	}
+
 
 	private void removeDisableAtributeByJS(By by) {
 		WebElement element = driver.findElement(by);
