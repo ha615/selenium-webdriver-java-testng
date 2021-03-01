@@ -23,7 +23,9 @@ public class Topic_09_Button_Radio_Checkbox {
 	WebDriverWait explicitWait;
 	Alert alert;
 	By result = By.xpath("//p[@id='result']");
-	
+	String username = "admin";
+	String password = "admin";
+
 	@BeforeTest
 	public void beforeTest() {
 		driver = new FirefoxDriver();
@@ -115,31 +117,95 @@ public class Topic_09_Button_Radio_Checkbox {
 		Assert.assertTrue(driver.findElement(radioBtn).isSelected());
 		sleepInSecond(4);
 	}
-	
+
 	public void TC04_Custom_Radio_Checkbox() {
 		driver.get(
 				"https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
-		Assert.assertTrue(driver.findElement(By.xpath("//div[@data-value='Cần Thơ' and @aria-checked='false']")).isDisplayed());
+		Assert.assertTrue(
+				driver.findElement(By.xpath("//div[@data-value='Cần Thơ' and @aria-checked='false']")).isDisplayed());
 		driver.findElement(By.xpath("//div[@data-value='Cần Thơ' and @aria-checked='false']")).click();
 		sleepInSecond(4);
-		Assert.assertTrue(driver.findElement(By.xpath("//div[@data-value='Cần Thơ' and @aria-checked='true']")).isDisplayed());
+		Assert.assertTrue(
+				driver.findElement(By.xpath("//div[@data-value='Cần Thơ' and @aria-checked='true']")).isDisplayed());
 	}
-	
-	@Test
+
 	public void TC05_Accept_Alert() {
 		driver.get("https://automationfc.github.io/basic-form/index.html");
 		driver.findElement(By.xpath("//button[text()='Click for JS Alert']")).click();
 		explicitWait.until(ExpectedConditions.alertIsPresent());
 		alert = driver.switchTo().alert();
-		//alert.dismiss();
-		Assert.assertEquals(alert.getText(),"I am a JS Alert");
-		//alert.sendKeys("zin zin");
+		// alert.dismiss();
+		Assert.assertEquals(alert.getText(), "I am a JS Alert");
+		// alert.sendKeys("zin zin");
 		sleepInSecond(4);
 		alert.accept();
 		sleepInSecond(4);
 		Assert.assertEquals(driver.findElement(result).getText(), "You clicked an alert successfully");
-		
+
 	}
+
+	public void TC06_Confirm_Alert() {
+		driver.get("https://automationfc.github.io/basic-form/index.html");
+		driver.findElement(By.xpath("//button[text()='Click for JS Confirm']")).click();
+		explicitWait.until(ExpectedConditions.alertIsPresent());
+		alert = driver.switchTo().alert();
+		// alert.dismiss();
+		Assert.assertEquals(alert.getText(), "I am a JS Confirm");
+		// alert.sendKeys("zin zin");
+		sleepInSecond(4);
+		// alert.accept();
+		alert.dismiss();
+		sleepInSecond(4);
+		Assert.assertEquals(driver.findElement(result).getText(), "You clicked: Ok");
+
+	}
+
+	public void TC07_Prompt_Alert() {
+		driver.get("https://automationfc.github.io/basic-form/index.html");
+		driver.findElement(By.xpath("//button[text()='Click for JS Prompt']")).click();
+		explicitWait.until(ExpectedConditions.alertIsPresent());
+		alert = driver.switchTo().alert();
+		// alert.dismiss();
+		String loginName = "zin zin";
+		alert.sendKeys(loginName);
+		sleepInSecond(4);
+
+		Assert.assertEquals(alert.getText(), "I am a JS prompt");
+
+		alert.accept();
+
+		sleepInSecond(4);
+
+		Assert.assertEquals(driver.findElement(result).getText(), "You entered: " + loginName);
+
+	}
+
+	public void TC08_Authentication_Alert() {
+		driver.get("http://" + username + ":" + password + "@" + "the-internet.herokuapp.com/basic_auth");
+		Assert.assertTrue(driver
+				.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]"))
+				.isDisplayed());
+	}
+
+	@Test
+	public void TC09_Authentication_Alert() {
+		String username = "admin";
+		String password = "admin";
+		driver.get("http://the-internet.herokuapp.com");
+		WebElement basicLocatorURL = driver.findElement(By.xpath("//a[text()='Basic Auth']"));
+		String txtURL = basicLocatorURL.getAttribute("href");
+		driver.get(getAuthenticationUrl(txtURL, username, password));
+		Assert.assertTrue(driver
+				.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]"))
+				.isDisplayed());
+	}
+
+	private String getAuthenticationUrl(String txtURL, String username, String password) {
+		String splitURL[]= txtURL.split("//");
+		txtURL = splitURL[0] + "//" + username + ":"  + password + "@" + splitURL[1];
+		return txtURL;
+	}
+
 	private void clickByJS(By by) {
 		WebElement element = driver.findElement(by);
 		jsExecutor.executeScript("arguments[0].click()", element);
