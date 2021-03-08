@@ -4,6 +4,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -37,10 +38,20 @@ public class Topic_10_User_Interactions {
 	@Test
 	public void TC02_Hover_To_Element() {
 		driver.get("https://www.myntra.com/");
-		action.moveToElement(driver.findElement(By.xpath("//div[@class='desktop-navLink']/a[text()='Kids']")))
-				.perform();
-		sleepSecond(4);
-		driver.findElement(By.xpath("//a[text()='Home & Bath']")).click();
+		driver.findElement(By.xpath("//div[@class='desktop-navLink']/a[text()='Kids']")).click();
+		//action.moveToElement(element).perform();
+		//sleepSecond(4);
+		//driver.findElement(By.xpath("//a[text()='Home & Bath']")).click();
+		sleepSecond(6);
+	}
+	
+	@Test
+	public void TC03_Hover_To_Element() {
+		driver.get("https://hn.telio.vn/");
+		driver.findElement(By.xpath("//div[@class='desktop-navLink']/a[text()='Kids']")).click();
+		//action.moveToElement(element).perform();
+		//sleepSecond(4);
+		//driver.findElement(By.xpath("//a[text()='Home & Bath']")).click();
 		sleepSecond(6);
 	}
 
