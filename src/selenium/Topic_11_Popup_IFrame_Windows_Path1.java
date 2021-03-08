@@ -83,7 +83,9 @@ public class Topic_11_Popup_IFrame_Windows_Path1 {
 	@Test
 	public void TC04_Random_Popup_Not_In_DOM() {
 		driver.get("https://shopee.vn/");
-		explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='home_popup_banner']")));
+		//sleepInSeconds(5);
+
+		//explicitWait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//img[@alt='home_popup_banner']")));
 		List<WebElement> popup = driver.findElements(By.xpath("//img[@alt='home_popup_banner']"));
 		if(popup.size()>0 && popup.get(0).isDisplayed()) {
 			System.out.println("Close popup");
