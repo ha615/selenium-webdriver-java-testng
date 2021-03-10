@@ -15,7 +15,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 
-public class Topic_11_Popup_IFrame_Windows_Path1 {
+public class Topic_11_Popup{
 	WebDriver driver;
 	WebDriverWait explicitWait;
 	@BeforeTest
