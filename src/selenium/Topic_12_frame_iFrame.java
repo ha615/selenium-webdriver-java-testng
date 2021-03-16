@@ -1,10 +1,16 @@
+
 package selenium;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Spliterator;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -18,12 +24,13 @@ public class Topic_12_frame_iFrame {
 
 	@BeforeClass
 	public void beforeClass() {
-		driver = new FirefoxDriver();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		System.setProperty("webdriver.chrome.driver", ".\\browserDrivers\\chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 	}
 
-	@Test
+	
 	public void TC_01_IFrame() {
 		driver.get("https://automationfc.com/2020/02/18/training-online-automation-testing/");
 		// switch to iFrame FB
@@ -40,17 +47,50 @@ public class Topic_12_frame_iFrame {
 		// switch to Top Windows
 		driver.switchTo().defaultContent();
 		Assert.assertEquals(driver.findElement(By.xpath("//h1[@class='post-title']")).getText(),
-				"[Training Online] – Fullstack Selenium WebDriver Framework in Java (Livestream)");
+				"[Training Online] â€“ Fullstack Selenium WebDriver Framework in Java (Livestream)");
 		// switch to Google doc iFrame
 		driver.switchTo().frame(driver.findElement(By.xpath("//iframe[contains(@src,'docs.google.com')]")));
 		Assert.assertEquals(driver.findElement(By.cssSelector(".exportFormTitle")).getText(),
-				"KHÓA HỌC SELENIUM AUTOMATION TESTING");
+				"KHÃ“A Há»ŒC SELENIUM AUTOMATION TESTING");
 	}
 
-	// @Test
-	public void TC_02_ValidatePageTitle() {
-		// Login Page title
+	@Test
+	public void TC_02_IFrame() {
+		driver.get("https://kyna.vn/");
+		driver.switchTo().frame("cs_chat_iframe");
+		driver.findElement(By.xpath("//div[@class='border_overlay meshim_widget_widgets_BorderOverlay']")).click();
+		driver.findElement(By.xpath("//textarea[@name='message']")).sendKeys("zin zin");
+		driver.findElement(By.xpath("//textarea[@name='message']")).sendKeys(Keys.ENTER);
+		sleepInSecond(5);
+	
+		driver.switchTo().defaultContent();
+		driver.findElement(By.xpath("//input[@id='live-search-bar']")).sendKeys("Excel");
+		driver.findElement(By.xpath("//button[@class='search-button']")).click();
+		sleepInSecond(5);
+		
+		//List<WebElement> courseList = driver.findElements(By.xpath("//ul[@class='k-box-card-list']/li"));
+		List<WebElement> courseList = driver.findElements(By.cssSelector("div.content h4"));
+		List<String> courseListName = new ArrayList<String>(); 
+		for (WebElement courseElement : courseList) {
+			System.out.println(courseElement.getText());
+			courseListName.add(courseElement.getText());
+		}
+		
+		for (String courseName : courseListName) {
+			Assert.assertTrue(courseName.contains("Excel"));
+		}
 	}
+
+	private void sleepInSecond(long i)  {
+		// TODO Auto-generated method stub
+		try {
+			Thread.sleep(i*1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 	// @Test
 	public void TC_03_LoginFormDisplayed() {
