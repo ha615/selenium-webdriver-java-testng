@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Tiki" parallel="false">
+  <test name="Test"> 
+  
+  	<classes>
+  		<class name = "testng.Topic_05_Parameter"/>
+  	</classes>
+  	
+    
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
